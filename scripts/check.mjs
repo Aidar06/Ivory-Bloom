@@ -55,6 +55,7 @@ assert.equal(calls[1].url,`${API_BASE_URL}/3/full`);
 const html=fs.readFileSync(path.join(dist,'index.html'),'utf8');
 const css=fs.readFileSync(path.join(dist,'styles.css'),'utf8');
 const app=fs.readFileSync(path.join(dist,'app.js'),'utf8');
+const vercel=JSON.parse(fs.readFileSync(path.join(root,'vercel.json'),'utf8'));
 for(const marker of ['backgroundVideo','autoplay muted loop playsinline','statusScreen','languageSwitch','rsvpForm','googleMap','twoGisMap','calendarDays','countdownDays','countdownSeconds','footerCountdown','<select id="guestCount"'])assert(html.includes(marker),`Missing HTML ${marker}`);
 for(const marker of ['decor--rose','decor--ribbon','decor--pearls','decor--rings','decor--crystal','decor--butterfly','decor--seal','decor--pearl-orchid','decor--hanging-orchids','decor--butterfly-pair'])assert(html.includes(marker),`Missing decorative overlay ${marker}`);
 for(const marker of ['position:fixed','backdrop-filter:blur','overflow-x:clip','@media (max-width:360px)','prefers-reduced-motion','env(safe-area-inset-right)','env(safe-area-inset-bottom)','grid-template-columns:1fr 1fr'])assert(css.includes(marker),`Missing CSS ${marker}`);
@@ -62,5 +63,7 @@ for(const marker of ['translateZ(','drop-shadow(','@keyframes decorFloat'])asser
 for(const marker of ['appendGuestToInvitation','IntersectionObserver','localStorage','renderTimeline','renderLanguageSwitch','startCountdown','setInterval(updateCountdown,1000)','pointerdown','replaceChildren(...options)'])assert(app.includes(marker),`Missing behavior ${marker}`);
 assert(!html.includes('audio'), 'Audio must not be present');
 assert(fs.statSync(path.join(dist,'assets','wedding-arch-loop.mp4')).size<4_000_000,'Background video is too heavy');
+assert.equal(vercel.outputDirectory,'dist');
+assert.deepEqual(vercel.rewrites,[{source:'/(.*)',destination:'/index.html'}]);
 
-console.log('Passed: dynamic schema, languages, maps, RSVP, fixed animated background, glass panel, mobile safeguards, and asset budget.');
+console.log('Passed: dynamic schema, languages, maps, RSVP, fixed animated background, glass panel, mobile safeguards, asset budget, and Vercel routing.');
