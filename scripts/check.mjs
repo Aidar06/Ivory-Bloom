@@ -13,7 +13,7 @@ import {
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const dist=path.join(root,'dist');
-const required=['index.html','styles.css','app.js','backend-adapter.js','assets/wedding-arch-loop.mp4','assets/wedding-arch-poster.png','assets/fonts/cormorant-regular.woff2','assets/fonts/cormorant-italic.woff2','assets/fonts/manrope-regular.woff2'];
+const required=['index.html','styles.css','app.js','backend-adapter.js','assets/wedding-arch-loop.mp4','assets/wedding-arch-poster.jpg','assets/fonts/cormorant-regular.woff2','assets/fonts/cormorant-italic.woff2','assets/fonts/manrope-regular.woff2'];
 for(const file of required)assert(fs.statSync(path.join(dist,file)).size>100,`Missing ${file}`);
 for(const file of ['decor-01-ivory-rose.png','decor-02-silk-ribbon.png','decor-03-pearls.png','decor-04-rings.png','decor-05-crystal.png','decor-06-organza-butterfly.png','decor-07-wax-seal.png','decor-08-pearl-orchid.png','decor-09-hanging-orchids.png','decor-10-butterfly-pair.png'])assert(fs.statSync(path.join(dist,'assets','decorations',file)).size>100,`Missing decoration ${file}`);
 
