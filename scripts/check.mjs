@@ -64,6 +64,10 @@ for(const marker of ['appendGuestToInvitation','IntersectionObserver','localStor
 assert(!html.includes('audio'), 'Audio must not be present');
 assert(fs.statSync(path.join(dist,'assets','wedding-arch-loop.mp4')).size<4_000_000,'Background video is too heavy');
 assert.equal(vercel.outputDirectory,'dist');
-assert.deepEqual(vercel.rewrites,[{source:'/(.*)',destination:'/index.html'}]);
+assert.deepEqual(vercel.routes,[
+  {src:'/preview/?',dest:'/preview.html'},
+  {handle:'filesystem'},
+  {src:'/(.*)',dest:'/index.html'}
+]);
 
 console.log('Passed: dynamic schema, languages, maps, RSVP, fixed animated background, glass panel, mobile safeguards, asset budget, and Vercel routing.');

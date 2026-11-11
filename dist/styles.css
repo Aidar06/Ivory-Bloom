@@ -16,7 +16,7 @@ button,a{ -webkit-tap-highlight-color:transparent}
 .glass-panel{position:relative;width:min(calc(100% - 96px),620px);margin:0 auto;overflow:visible;border:1px solid rgba(255,255,255,.38);border-radius:4px;background:linear-gradient(180deg,rgba(255,252,246,.27),rgba(255,248,238,.16));box-shadow:0 22px 70px rgba(76,54,27,.07);backdrop-filter:blur(3px) saturate(1.01);-webkit-backdrop-filter:blur(3px) saturate(1.01);transform-style:preserve-3d}
 .glass-panel::before{content:"";position:absolute;inset:9px;z-index:5;border:1px solid rgba(255,255,255,.2);border-radius:1px;pointer-events:none}
 .section{position:relative;padding:clamp(86px,13vw,132px) clamp(28px,7vw,58px);text-align:center}
-.decor{position:absolute;z-index:7;display:block;height:auto;max-width:none;pointer-events:none;user-select:none;transform-style:preserve-3d;will-change:transform;filter:drop-shadow(0 16px 13px rgba(79,54,25,.18));animation:decorFloat 7s ease-in-out infinite alternate}
+.decor{position:absolute;z-index:7;display:block;height:auto;max-width:none;pointer-events:none;user-select:none;transform-style:preserve-3d;backface-visibility:hidden;will-change:translate;filter:drop-shadow(0 16px 13px rgba(79,54,25,.18));animation:decorFloat 10s cubic-bezier(.45,0,.55,1) infinite alternate}
 .decor--rose{top:-56px;left:-116px;width:clamp(185px,39vw,290px);transform:rotate(-12deg) translateZ(28px);animation-delay:-1.8s}
 .decor--ribbon{top:38%;right:-94px;width:clamp(130px,25vw,190px);transform:rotate(9deg) translateZ(18px);opacity:.94;animation-delay:-4.2s}
 .decor--pearls{right:-137px;bottom:-87px;width:clamp(220px,46vw,320px);transform:rotate(-15deg) translateZ(32px);animation-delay:-3s}
@@ -127,7 +127,7 @@ button,a{ -webkit-tap-highlight-color:transparent}
 .reveal.is-visible{opacity:1;transform:none}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes scrollLine{0%,100%{transform:scaleY(.55);transform-origin:top;opacity:.45}50%{transform:scaleY(1);opacity:1}}
-@keyframes decorFloat{0%{margin-top:-3px}100%{margin-top:6px}}
+@keyframes decorFloat{0%{translate:0 -3px}100%{translate:0 6px}}
 @media (max-width:620px){
   body{font-size:19px}
   .invitation-page{padding:42px 0 max(104px,calc(88px + env(safe-area-inset-bottom)))}
