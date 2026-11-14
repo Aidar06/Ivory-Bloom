@@ -18,7 +18,7 @@ for(const file of required)assert(fs.statSync(path.join(dist,file)).size>100,`Mi
 for(const file of ['decor-01-ivory-rose.png','decor-02-silk-ribbon.png','decor-03-pearls.png','decor-04-rings.png','decor-05-crystal.png','decor-06-organza-butterfly.png','decor-07-wax-seal.png','decor-08-pearl-orchid.png','decor-09-hanging-orchids.png','decor-10-butterfly-pair.png'])assert(fs.statSync(path.join(dist,'assets','decorations',file)).size>100,`Missing decoration ${file}`);
 
 const fixture={
-  id:3,languages:{enabled:['ru','ky','kk'],default:'ky'},names:{groom:'Айдар',bride:'Алина'},date:'2027-08-18T16:00:00',
+  public_id:'pub-3',languages:{enabled:['ru','ky','kk'],default:'ky'},names:{groom:'Айдар',bride:'Алина'},date:'2027-08-18T16:00:00',
   invitation:{ru:{title:'Дорогие гости',text:'Приглашаем вас'},ky:{title:'Кымбаттуу коноктор',text:'Сиздерди чакырабыз'},kk:{title:'Құрметті қонақтар',text:'Сіздерді шақырамыз'}},
   wish_block:{enabled:true,content:{ru:{title:'Пожелание',text:'Будьте рядом'},ky:{title:'Каалоо',text:'Жаныбызда болуңуз'},kk:{title:'Тілек',text:'Жанымызда болыңыз'}}},
   ceremonies:[
@@ -29,10 +29,10 @@ const fixture={
   rsvp:{enabled:true,allow_guest_wish:true,max_guests:4},guests:[]
 };
 
-assert.equal(resolveInvitationId('/3'),3);
-assert.equal(resolveInvitationId('/3/details'),3);
-assert.equal(resolveInvitationId('/wrong'),null);
-assert.equal(resolveInvitationId('/',7),7);
+assert.equal(resolveInvitationId('/pub-3'),'pub-3');
+assert.equal(resolveInvitationId('/pub-3/details'),'pub-3');
+assert.equal(resolveInvitationId('/wrong!'),null);
+assert.equal(resolveInvitationId('/',7),'7');
 const normalized=normalizeInvitation(fixture,3);
 assert.deepEqual(normalized.languages.enabled,['ru','ky','kk']);
 assert.equal(normalized.languages.default,'ky');
@@ -48,9 +48,9 @@ const payload=buildPatchPayload(fixture,{name:'  Айбек ',wish:'<b>Любв�
 assert.deepEqual(payload.guests[0],{name:'Айбек',wish:'Любви!',guests_count:4,is_attending:true});
 const calls=[];
 const mockFetch=async(url,options={})=>{calls.push({url,options});return new Response((options.method||'GET')==='GET'?JSON.stringify(fixture):'{"ok":true}',{status:200})};
-await appendGuestToInvitation(3,{name:'Тест',guestsCount:2,isAttending:true},{fetchImpl:mockFetch});
-assert.equal(calls[0].url,`${API_BASE_URL}/3`);
-assert.equal(calls[1].url,`${API_BASE_URL}/3/full`);
+await appendGuestToInvitation('pub-3',{name:'Тест',guestsCount:2,isAttending:true},{fetchImpl:mockFetch});
+assert.equal(calls[0].url,`${API_BASE_URL}/pub-3`);
+assert.equal(calls[1].url,`${API_BASE_URL}/pub-3/full`);
 
 const html=fs.readFileSync(path.join(dist,'index.html'),'utf8');
 const css=fs.readFileSync(path.join(dist,'styles.css'),'utf8');
